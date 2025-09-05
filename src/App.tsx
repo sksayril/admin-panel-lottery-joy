@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
 import Users from './components/Users';
 import Agents from './components/Agents';
+import Master from './components/Master';
 import Games from './components/Games';
 import GameSettings from './components/GameSettings';
 import LotteryGame from './components/LotteryGame';
@@ -17,20 +18,25 @@ import Login from './components/Login';
 
 // Main App Layout Component
 const AppLayout: React.FC<{ 
-  isAuthenticated: boolean; 
   onLogout: () => void;
   sidebarCollapsed: boolean;
   setSidebarCollapsed: (collapsed: boolean) => void;
-}> = ({ isAuthenticated, onLogout, sidebarCollapsed, setSidebarCollapsed }) => {
+}> = ({ onLogout, sidebarCollapsed, setSidebarCollapsed }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [selectedGameId, setSelectedGameId] = useState<string | null>(null);
-  const [selectedGameType, setSelectedGameType] = useState<string | null>(null);
+  const [, setSelectedGameId] = useState<string | null>(null);
+  const [, setSelectedGameType] = useState<string | null>(null);
 
   // Extract current section from URL
   const getCurrentSection = () => {
     const path = location.pathname;
     if (path === '/') return 'dashboard';
+    if (path === '/administration') return 'administration';
+    if (path === '/master') return 'master';
+    if (path === '/super-stockist') return 'super-stockist';
+    if (path === '/stockist') return 'stockist';
+    if (path === '/sub-stockist') return 'sub-stockist';
+    if (path === '/retailer') return 'retailer';
     if (path === '/games') return 'games';
     if (path.startsWith('/lottery-games')) return 'lottery-games';
     if (path.startsWith('/bigsmall-games')) return 'bigsmall-games';
@@ -69,6 +75,12 @@ const AppLayout: React.FC<{
         activeSection={getCurrentSection()}
         setActiveSection={(section) => {
           if (section === 'dashboard') navigate('/');
+          else if (section === 'administration') navigate('/administration');
+          else if (section === 'master') navigate('/master');
+          else if (section === 'super-stockist') navigate('/super-stockist');
+          else if (section === 'stockist') navigate('/stockist');
+          else if (section === 'sub-stockist') navigate('/sub-stockist');
+          else if (section === 'retailer') navigate('/retailer');
           else if (section === 'users') navigate('/users');
           else if (section === 'agents') navigate('/agents');
           else if (section === 'settings') navigate('/settings');
@@ -85,6 +97,12 @@ const AppLayout: React.FC<{
         <div className="p-6">
           <Routes>
             <Route path="/" element={<Dashboard />} />
+            <Route path="/administration" element={<div className="p-8"><h1 className="text-2xl font-bold text-gray-900">Administration</h1><p className="text-gray-600 mt-2">Administration panel coming soon...</p></div>} />
+            <Route path="/master" element={<Master />} />
+            <Route path="/super-stockist" element={<div className="p-8"><h1 className="text-2xl font-bold text-gray-900">Super Stockist</h1><p className="text-gray-600 mt-2">Super Stockist management panel coming soon...</p></div>} />
+            <Route path="/stockist" element={<div className="p-8"><h1 className="text-2xl font-bold text-gray-900">Stockist</h1><p className="text-gray-600 mt-2">Stockist management panel coming soon...</p></div>} />
+            <Route path="/sub-stockist" element={<div className="p-8"><h1 className="text-2xl font-bold text-gray-900">Sub Stockist</h1><p className="text-gray-600 mt-2">Sub Stockist management panel coming soon...</p></div>} />
+            <Route path="/retailer" element={<div className="p-8"><h1 className="text-2xl font-bold text-gray-900">Retailer</h1><p className="text-gray-600 mt-2">Retailer management panel coming soon...</p></div>} />
             <Route path="/users" element={<Users />} />
             <Route path="/agents" element={<Agents />} />
             <Route path="/games" element={
@@ -200,7 +218,6 @@ function App() {
   return (
     <Router>
       <AppLayout 
-        isAuthenticated={isAuthenticated}
         onLogout={handleLogout}
         sidebarCollapsed={sidebarCollapsed}
         setSidebarCollapsed={setSidebarCollapsed}

@@ -11,7 +11,13 @@ import {
   Crown,
   Dices,
   TrendingUp,
-  Palette
+  Palette,
+  Shield,
+  UserCog,
+  UserPlus,
+  User,
+  UserMinus,
+  Store
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -31,15 +37,21 @@ const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { id: 'administration', label: 'Administration', icon: Shield },
+    { id: 'master', label: 'Master', icon: UserCog },
+    { id: 'super-stockist', label: 'Super Stockist', icon: UserPlus },
+    { id: 'stockist', label: 'Stockist', icon: User },
+    { id: 'sub-stockist', label: 'Sub Stockist', icon: UserMinus },
+    { id: 'retailer', label: 'Retailer', icon: Store },
     { id: 'users', label: 'Users', icon: Users },
     { id: 'agents', label: 'Agents', icon: UserCheck },
-    { id: 'games', label: 'Games', icon: Gamepad2 },
-    { id: 'lottery-games', label: 'Lottery Games', icon: Dices },
-    { id: 'bigsmall-games', label: 'Big & Small', icon: TrendingUp },
-    { id: 'color-games', label: 'Color Prediction', icon: Palette },
-    { id: 'lottery-settings', label: 'Lottery Settings', icon: Settings },
-    { id: 'bigsmall-settings', label: 'Big & Small Settings', icon: Settings },
-    { id: 'color-settings', label: 'Color Settings', icon: Settings },
+    // { id: 'games', label: 'Games', icon: Gamepad2 },
+    // { id: 'lottery-games', label: 'Lottery Games', icon: Dices },
+    // { id: 'bigsmall-games', label: 'Big & Small', icon: TrendingUp },
+    // { id: 'color-games', label: 'Color Prediction', icon: Palette },
+    // { id: 'lottery-settings', label: 'Lottery Settings', icon: Settings },
+    // { id: 'bigsmall-settings', label: 'Big & Small Settings', icon: Settings },
+    // { id: 'color-settings', label: 'Color Settings', icon: Settings },
   ];
 
   return (
