@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Save, Search, Trash2, RotateCcw, ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface MasterData {
@@ -24,9 +25,44 @@ interface RateData {
   purchaseRate: number;
 }
 
-const Master: React.FC = () => {
-  const [activeMainTab, setActiveMainTab] = useState<'manage' | 'district' | 'drawtime'>('manage');
+interface MasterProps {
+  activeSection?: string;
+}
+
+const Master: React.FC<MasterProps> = ({ activeSection = 'manage-master' }) => {
+  const navigate = useNavigate();
+  
+  const getInitialTab = () => {
+    switch (activeSection) {
+      case 'district-master': return 'district';
+      case 'drawtime-master': return 'drawtime';
+      default: return 'manage';
+    }
+  };
+
+  const [activeMainTab, setActiveMainTab] = useState<'manage' | 'district' | 'drawtime'>(getInitialTab());
   const [activeRateTab, setActiveRateTab] = useState<'purchase' | 'ac'>('purchase');
+
+  // Update tab when activeSection changes
+  useEffect(() => {
+    const newTab = getInitialTab();
+    setActiveMainTab(newTab);
+  }, [activeSection]);
+
+  const handleTabChange = (tab: 'manage' | 'district' | 'drawtime') => {
+    setActiveMainTab(tab);
+    switch (tab) {
+      case 'manage':
+        navigate('/master/manage');
+        break;
+      case 'district':
+        navigate('/master/district');
+        break;
+      case 'drawtime':
+        navigate('/master/drawtime');
+        break;
+    }
+  };
   const [masterData, setMasterData] = useState<MasterData>({
     fullName: '',
     aadhaarId: '',
@@ -134,36 +170,36 @@ const Master: React.FC = () => {
         <div className="bg-white rounded-lg shadow-sm mb-6">
           <div className="border-b border-gray-200">
             <nav className="flex space-x-8 px-6">
-              <button
-                onClick={() => setActiveMainTab('manage')}
-                className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
-                  activeMainTab === 'manage'
-                    ? 'border-sky-500 text-sky-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                }`}
-              >
-                Manage Master
-              </button>
-              <button
-                onClick={() => setActiveMainTab('district')}
-                className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
-                  activeMainTab === 'district'
-                    ? 'border-sky-500 text-sky-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                }`}
-              >
-                District Master
-              </button>
-              <button
-                onClick={() => setActiveMainTab('drawtime')}
-                className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
-                  activeMainTab === 'drawtime'
-                    ? 'border-sky-500 text-sky-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                }`}
-              >
-                Draw Time Master
-              </button>
+               <button
+                 onClick={() => handleTabChange('manage')}
+                 className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+                   activeMainTab === 'manage'
+                     ? 'border-sky-500 text-sky-600'
+                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                 }`}
+               >
+                 Manage Master
+               </button>
+               <button
+                 onClick={() => handleTabChange('district')}
+                 className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+                   activeMainTab === 'district'
+                     ? 'border-sky-500 text-sky-600'
+                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                 }`}
+               >
+                 District Master
+               </button>
+               <button
+                 onClick={() => handleTabChange('drawtime')}
+                 className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+                   activeMainTab === 'drawtime'
+                     ? 'border-sky-500 text-sky-600'
+                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                 }`}
+               >
+                 Draw Time Master
+               </button>
             </nav>
           </div>
         </div>

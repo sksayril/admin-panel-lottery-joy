@@ -32,7 +32,9 @@ const AppLayout: React.FC<{
     const path = location.pathname;
     if (path === '/') return 'dashboard';
     if (path === '/administration') return 'administration';
-    if (path === '/master') return 'master';
+    if (path === '/master/manage' || path === '/master') return 'manage-master';
+    if (path === '/master/district') return 'district-master';
+    if (path === '/master/drawtime') return 'drawtime-master';
     if (path === '/super-stockist') return 'super-stockist';
     if (path === '/stockist') return 'stockist';
     if (path === '/sub-stockist') return 'sub-stockist';
@@ -76,7 +78,9 @@ const AppLayout: React.FC<{
         setActiveSection={(section) => {
           if (section === 'dashboard') navigate('/');
           else if (section === 'administration') navigate('/administration');
-          else if (section === 'master') navigate('/master');
+          else if (section === 'manage-master') navigate('/master/manage');
+          else if (section === 'district-master') navigate('/master/district');
+          else if (section === 'drawtime-master') navigate('/master/drawtime');
           else if (section === 'super-stockist') navigate('/super-stockist');
           else if (section === 'stockist') navigate('/stockist');
           else if (section === 'sub-stockist') navigate('/sub-stockist');
@@ -98,7 +102,10 @@ const AppLayout: React.FC<{
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/administration" element={<div className="p-8"><h1 className="text-2xl font-bold text-gray-900">Administration</h1><p className="text-gray-600 mt-2">Administration panel coming soon...</p></div>} />
-            <Route path="/master" element={<Master />} />
+            <Route path="/master" element={<Master activeSection={getCurrentSection()} />} />
+            <Route path="/master/manage" element={<Master activeSection={getCurrentSection()} />} />
+            <Route path="/master/district" element={<Master activeSection={getCurrentSection()} />} />
+            <Route path="/master/drawtime" element={<Master activeSection={getCurrentSection()} />} />
             <Route path="/super-stockist" element={<div className="p-8"><h1 className="text-2xl font-bold text-gray-900">Super Stockist</h1><p className="text-gray-600 mt-2">Super Stockist management panel coming soon...</p></div>} />
             <Route path="/stockist" element={<div className="p-8"><h1 className="text-2xl font-bold text-gray-900">Stockist</h1><p className="text-gray-600 mt-2">Stockist management panel coming soon...</p></div>} />
             <Route path="/sub-stockist" element={<div className="p-8"><h1 className="text-2xl font-bold text-gray-900">Sub Stockist</h1><p className="text-gray-600 mt-2">Sub Stockist management panel coming soon...</p></div>} />
