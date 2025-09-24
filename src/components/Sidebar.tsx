@@ -16,7 +16,8 @@ import {
   Store,
   ChevronDown,
   ChevronRight,
-  Settings2
+  Settings2,
+  Gamepad2
 } from 'lucide-react';
 
 interface MenuItem {
@@ -41,7 +42,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   setCollapsed,
   onLogout 
 }) => {
-  const [expandedItems, setExpandedItems] = useState<string[]>(['controller']);
+  const [expandedItems, setExpandedItems] = useState<string[]>(['controller', 'master']);
 
   const menuItems: MenuItem[] = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -51,16 +52,17 @@ const Sidebar: React.FC<SidebarProps> = ({
       label: 'Controller', 
       icon: Settings2,
       children: [
-        { 
-          id: 'master', 
-          label: 'Master', 
-          icon: UserCog,
-          children: [
-            { id: 'manage-master', label: 'Manage Master', icon: UserCog },
-            { id: 'district-master', label: 'District Master', icon: Shield },
-            { id: 'drawtime-master', label: 'Draw Time Master', icon: Settings }
-          ]
-        }
+        { id: 'district-master', label: 'District Master', icon: Shield },
+        { id: 'drawtime-master', label: 'Draw Time Master', icon: Settings },
+        { id: 'game-master', label: 'Game Master', icon: Gamepad2 }
+      ]
+    },
+    {
+      id: 'master',
+      label: 'Master',
+      icon: UserCog,
+      children: [
+        { id: 'manage-master', label: 'Manage Master', icon: UserCog },
       ]
     },
     { id: 'super-stockist', label: 'Super Stockist', icon: UserPlus },
